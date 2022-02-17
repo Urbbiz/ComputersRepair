@@ -7,23 +7,23 @@ namespace ComputerRepair.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class EmployeeController : ControllerBase
+    public class MaintenanceController : ControllerBase
     {
-        private readonly EmployeeRepository _repository;
+        private readonly MaintenanceRepository _repository;
 
-        public EmployeeController(EmployeeRepository repository)
+        public MaintenanceController(MaintenanceRepository repository)
         {
             _repository = repository;
         }
 
         [HttpPost]
-        public async Task Post(Employee employee)
+        public async Task Post(Maintenance maintenance)
         {
-            await _repository.Add(employee);
+            await _repository.Add(maintenance);
         }
 
         [HttpGet]
-        public async Task<List<Employee>> GetAll()
+        public async Task<List<Maintenance>> GetAll()
         {
             var items = await _repository.GetAll();
             return items;

@@ -14,6 +14,6 @@ namespace ComputerRepair.Data
 
         public DbSet<Employee> Employees { get; set; }
 
-        public DbSet<Maitence> Maitences { get; set; }  
+        public DbSet<Maintenance> Maitences { get; set; }  
     }
 }

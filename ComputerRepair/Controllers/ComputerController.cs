@@ -5,25 +5,26 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace ComputerRepair.Controllers
 {
+
     [ApiController]
     [Route("[controller]")]
-    public class EmployeeController : ControllerBase
+    public class ComputerController : ControllerBase
     {
-        private readonly EmployeeRepository _repository;
+        private readonly ComputerRepository _repository;
 
-        public EmployeeController(EmployeeRepository repository)
+        public ComputerController(ComputerRepository repository)
         {
             _repository = repository;
         }
 
         [HttpPost]
-        public async Task Post(Employee employee)
+        public async Task Post(Computer computer)
         {
-            await _repository.Add(employee);
+           await _repository.Add(computer);
         }
 
         [HttpGet]
-        public async Task<List<Employee>> GetAll()
+        public async Task<List<Computer>> GetAll()
         {
             var items = await _repository.GetAll();
             return items;
