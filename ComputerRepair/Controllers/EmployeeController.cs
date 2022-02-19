@@ -1,4 +1,6 @@
-﻿using ComputerRepair.Data;
+﻿using AutoMapper;
+using ComputerRepair.Data;
+using ComputerRepair.Dtos;
 using ComputerRepair.Enteties;
 using ComputerRepair.Repositories;
 using Microsoft.AspNetCore.Mvc;
@@ -10,23 +12,27 @@ namespace ComputerRepair.Controllers
     public class EmployeeController : ControllerBase
     {
         private readonly EmployeeRepository _repository;
+        private readonly IMapper _mapper;
 
-        public EmployeeController(EmployeeRepository repository)
+        public EmployeeController(EmployeeRepository repository, IMapper mapper)
         {
             _repository = repository;
+            _mapper = mapper;
         }
 
         [HttpPost]
-        public async Task Post(Employee employee)
+        public async Task Post(EmployeeDto employeeDto)
         {
-            await _repository.Add(employee);
+            var entity = _mapper.Map<Employee>(employeeDto);
+            await _repository.Post(entity);
         }
 
         [HttpGet]
-        public async Task<List<Employee>> GetAll()
+        public async Task<List<EmployeeDto>> GetAll()
         {
-            var items = await _repository.GetAll();
-            return items;
+            var enteties = await _repository.GetAll();
+            var dto = _mapper.Map<List<EmployeeDto>>(enteties);
+            return dto;
         }
     }
 }

@@ -13,7 +13,7 @@ namespace ComputerRepair.Repositories
             _context = context;
         }
 
-        public async Task Add(Computer computer)
+        public async Task Post(Computer computer)
         {
             _context.Add(computer);
             await _context.SaveChangesAsync();

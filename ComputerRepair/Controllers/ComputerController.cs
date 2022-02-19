@@ -1,4 +1,6 @@
-﻿using ComputerRepair.Data;
+﻿using AutoMapper;
+using ComputerRepair.Data;
+using ComputerRepair.Dtos;
 using ComputerRepair.Enteties;
 using ComputerRepair.Repositories;
 using Microsoft.AspNetCore.Mvc;
@@ -11,23 +13,27 @@ namespace ComputerRepair.Controllers
     public class ComputerController : ControllerBase
     {
         private readonly ComputerRepository _repository;
+        private readonly IMapper _mapper;
 
-        public ComputerController(ComputerRepository repository)
+        public ComputerController(ComputerRepository repository, IMapper mapper)
         {
             _repository = repository;
+            _mapper = mapper;
         }
 
         [HttpPost]
-        public async Task Post(Computer computer)
+        public async Task Post(ComputerDto computerDto)
         {
-           await _repository.Add(computer);
+            var entity = _mapper.Map<Computer>(computerDto);    
+           await _repository.Post(entity);
         }
 
         [HttpGet]
-        public async Task<List<Computer>> GetAll()
+        public async Task<List<ComputerDto>> GetAll()
         {
-            var items = await _repository.GetAll();
-            return items;
+            var enteties = await _repository.GetAll();
+            var dto = _mapper.Map<List<ComputerDto>>(enteties);
+            return dto;
         }
     }
 }

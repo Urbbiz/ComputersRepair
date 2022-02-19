@@ -1,10 +1,13 @@
 using ComputerRepair.Data;
 using ComputerRepair.Repositories;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 var defaultConnectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContext<DataContext>(d => d.UseSqlServer(defaultConnectionString));
@@ -12,6 +15,7 @@ builder.Services.AddDbContext<DataContext>(d => d.UseSqlServer(defaultConnection
 builder.Services.AddScoped<ComputerRepository>();
 builder.Services.AddScoped<MaintenanceRepository>();
 builder.Services.AddScoped<EmployeeRepository>();
+
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
