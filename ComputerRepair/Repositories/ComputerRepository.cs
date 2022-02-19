@@ -24,5 +24,15 @@ namespace ComputerRepair.Repositories
             return await _context.Computers.ToListAsync();
 
         }
+
+        public Computer FindComputerById(int id)
+        {
+            var entity = _context.Set<Computer>().FirstOrDefault(c => c.Id == id);
+            if (entity == null)
+            {
+                throw new ArgumentException("no such id in database");
+            }
+            return entity;
+        }
     }
 }

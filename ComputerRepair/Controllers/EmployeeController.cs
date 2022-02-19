@@ -11,12 +11,14 @@ namespace ComputerRepair.Controllers
     [Route("[controller]")]
     public class EmployeeController : ControllerBase
     {
-        private readonly EmployeeRepository _repository;
+        private readonly EmployeeRepository _employeeRepository;
+        private readonly ComputerRepository _computerRepository;
         private readonly IMapper _mapper;
 
-        public EmployeeController(EmployeeRepository repository, IMapper mapper)
+        public EmployeeController(EmployeeRepository employeeRepository, ComputerRepository computerRepository, IMapper mapper)
         {
-            _repository = repository;
+            _employeeRepository = employeeRepository;
+            _computerRepository = computerRepository;
             _mapper = mapper;
         }
 
@@ -24,15 +26,30 @@ namespace ComputerRepair.Controllers
         public async Task Post(EmployeeDto employeeDto)
         {
             var entity = _mapper.Map<Employee>(employeeDto);
-            await _repository.Post(entity);
+            await _employeeRepository.Post(entity);
         }
 
         [HttpGet]
         public async Task<List<EmployeeDto>> GetAll()
         {
-            var enteties = await _repository.GetAll();
+            var enteties = await _employeeRepository.GetAll();
             var dto = _mapper.Map<List<EmployeeDto>>(enteties);
             return dto;
+        }
+
+        [HttpPost("employees/{eId}/computers/{cId}")]
+        public async Task AssignComputerToEmployee(int eId, int cId)
+        {
+            var employeeEntity = _employeeRepository.FindEmployeeById(eId);
+
+            var ComputerEmployee = _computerRepository.FindComputerById(cId);
+
+            employeeEntity.Computers.Add(ComputerEmployee);
+
+            await _employeeRepository.Update(employeeEntity);
+
+
+
         }
     }
 }
