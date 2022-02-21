@@ -32,20 +32,23 @@ namespace ComputerRepair.Controllers
         }
 
         [HttpPost]
-        public async Task Post(MaintenanceDto maintenanceDto)
+        public async Task  Post(MaintenanceDto maintenanceDto)
         {
             var entity = _mapper.Map<Maintenance>(maintenanceDto);
-
             var computer =_computerRepository.FindComputerById(entity.ComputerId);
             
             if (computer == null)
             {
                 throw new ArgumentException("no such id in database");
-                BadRequest();
             }
-           
-
             await _repository.Add(entity);
+        }
+
+        [HttpDelete("{id}")]
+
+        public async Task Delete(int id)
+        {
+            await _repository.Delete(id);
         }
 
     }

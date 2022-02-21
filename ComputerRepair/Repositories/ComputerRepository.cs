@@ -25,14 +25,25 @@ namespace ComputerRepair.Repositories
 
         }
 
-        public Computer FindComputerById(int id)
+        public  Computer FindComputerById(int id)
         {
             var entity = _context.Set<Computer>().FirstOrDefault(c => c.Id == id);
+           
             if (entity == null)
             {
                 throw new ArgumentException("no such id in database");
             }
             return entity;
+        }
+
+        public async Task Delete(int id)
+        {
+            var entity = _context.Set<Computer>().FirstOrDefault(e => e.Id == id);
+            if (entity != null)
+            {
+                _context.Remove(entity);
+            }
+            await _context.SaveChangesAsync();
         }
     }
 }

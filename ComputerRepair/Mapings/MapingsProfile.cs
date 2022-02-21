@@ -10,6 +10,8 @@ namespace ComputerRepair.Mapings
         {
             CreateMap<EmployeeDto, Employee>().ReverseMap();
 
+            CreateMap<EmployeeGetDto, Employee>().ReverseMap();
+
             CreateMap<ComputerDto, Computer>().ReverseMap();    
 
             CreateMap<MaintenanceDto, Maintenance>().ReverseMap();

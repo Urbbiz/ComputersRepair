@@ -24,5 +24,17 @@ namespace ComputerRepair.Repositories
             return await _context.Maitences.ToListAsync();
 
         }
+
+        public async Task Delete(int id)
+        {
+            var entity = _context.Set<Maintenance>().FirstOrDefault(m => m.Id == id);
+
+            if (entity != null)
+            {
+                _context.Remove(entity);
+            }
+
+            await _context.SaveChangesAsync();
+        }
     }
 }

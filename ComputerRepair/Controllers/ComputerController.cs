@@ -35,5 +35,11 @@ namespace ComputerRepair.Controllers
             var dto = _mapper.Map<List<ComputerDto>>(enteties);
             return dto;
         }
+
+        [HttpDelete("{id}")]
+        public async Task Delete(int id)
+        {
+           await _repository.Delete(id);   
+        }
     }
 }

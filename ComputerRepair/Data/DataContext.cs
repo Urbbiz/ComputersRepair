@@ -10,10 +10,10 @@ namespace ComputerRepair.Data
 
         }
 
-        public DbSet<Computer> Computers { get; set; }
+        public DbSet<Computer>? Computers { get; set; }
 
-        public DbSet<Employee> Employees { get; set; }
+        public DbSet<Employee>? Employees { get; set; }
 
-        public DbSet<Maintenance> Maitences { get; set; }  
+        public DbSet<Maintenance>? Maitences { get; set; }  
     }
 }
